@@ -8,6 +8,8 @@ const express = require('express')
 	, passport = require('passport')
 	, crypto = require('crypto')
 	, fetch = require('node-fetch')
+	, StatsD = require('node-dogstatsd').StatsD
+	, dd = new StatsD()
 
 module.exports = function(client, config) {
 
@@ -103,6 +105,7 @@ module.exports = function(client, config) {
 			if (auth == config.dblAuth) {
 				const botdata = req.body
 				console.info('VOTE  | '+botdata.user);
+				dd.increment('tombot.vote')
 				votesDB.replaceOne({_id: botdata.user.toString()},{_id: botdata.user.toString(),value: true,expireAt: new Date((new Date).getTime() + (config.cacheHours*1000*60*60))},{upsert: true});
 				pointsDB.updateOne({_id: botdata.user.toString()},{$inc:{votes: 1}});
 				const body = {embeds: [{
