@@ -8,11 +8,11 @@ const express = require('express')
 	, passport = require('passport')
 
 module.exports = function(client, config) {
-/*
+
     const gsetDB = client.db(config.statsdbName).collection('gsets');
     const playlistDB = client.db(config.statsdbName).collection('playlists');
     const permsDB = client.db(config.statsdbName).collection('permissions');
-*/
+
     router.get('/', (req, res) => {
         res.render('homepage', {
             cache: false,
@@ -80,6 +80,13 @@ module.exports = function(client, config) {
         res.type('text/plain');
         res.send('User-agent: *\nDisallow:');
     });
+/*	router.get('/api/guilds/:guildid', dashboardGuildCheck, (req, res) => {
+		res.json({guild:res.locals.guild, settings:res.locals.settings.value, permissions:res.locals.permissions.value});
+	})*/
+	router.get('/login',
+        passport.authenticate('discord', { scope: ['identify', 'guilds'] }),
+        (req, res) => {}
+    );
     router.get('*', (req, res) => {
         res.status(404).render('404', {
             cache: true,
@@ -93,19 +100,13 @@ module.exports = function(client, config) {
         req.logout();
         res.redirect('/');
     });
-    router.post('/login',
-        passport.authenticate('discord', { scope: ['identify', 'guilds'] }),
-        (req, res) => {}
-    );
-
 	function checkAuth(req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
 		} else {
-			res.redirect('/');
+			return res.redirect('/login')
 		}
 	}
-/*
 	async function dashboardGuildCheck(req, res, next) {
         if (req.params.guildid) {
             const guild = req.user.guilds.find(guild => guild.id === req.params.guildid);
@@ -127,7 +128,7 @@ module.exports = function(client, config) {
             res.status(400).json({error: 'Invalid request.'});
         }
 	}
-*/
+
 	return router;
 
 }
