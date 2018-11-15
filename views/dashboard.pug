@@ -1,8 +1,8 @@
 extends layout.pug
 
 block scripts
-	include ./js/api.js
-	
+	script(defer src="/js/api.js")
+
 block pre-content
 		div(style='overflow:hidden;')
 			div(class='sidebar')

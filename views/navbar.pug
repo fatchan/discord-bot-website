@@ -5,12 +5,10 @@ div(class='navbar')
 		. 
 			Home
 	if !user
-		form(class='navbar-button' style='padding:0px;margin:0px;height:50px;' action="/login" method="post")
-			input(type='hidden' name='_csrf' value=csrf)
-			button(class='navbar-button' style='height: 50px;cursor: pointer;border:none;color:inherit;font: inherit;' name='Login' value='Login')
-				i(class='fas fa-sign-in-alt')
-				.
-					Login
+		a(class='navbar-button' href='/login')
+			i(class='fas fa-sign-in-alt')
+			.
+				Login
 	else 
 		form(class='navbar-button' style='padding:0px;margin:0px;height:50px;' action="/logout" method="post")
 			input(type='hidden' name='_csrf' value=csrf)
