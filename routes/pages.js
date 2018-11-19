@@ -53,7 +53,15 @@ module.exports = function(client, config) {
             user: req.user,
             configs: info,
             faq: faq,
-            widgets: widgets,
+            csrf: req.csrfToken()
+        });
+    });
+    router.get('/vip', (req, res) => {
+        res.render('vip', {
+            cache: true,
+            style: req.cookies.style || config.defaultStyle,
+            user: req.user,
+            configs: info,
             csrf: req.csrfToken()
         });
     });
@@ -72,9 +80,6 @@ module.exports = function(client, config) {
     });
     router.get('/github', (req, res) => {
         res.redirect(info.githubURL);
-    });
-    router.get('/vip', (req, res) => {
-        res.redirect(info.donateURL);
     });
     router.get('/robots.txt', (req, res) => {
         res.type('text/plain');
