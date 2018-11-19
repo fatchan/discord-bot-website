@@ -9,7 +9,7 @@
 	},
 	{
 		"question": "Q. What types of music can TomBot play?",
-		"answer": "A. Tombot supports YouTube(links/search), Soundcloud(track/album/set), Spotify(track/album/artist/playlist), and Twitch"
+		"answer": "A. Tombot supports YouTube(links/search), Soundcloud(track/album/set), Spotify(track/album/artist/playlist), Twitch.tv, and Radio (Radio.net/de)"
 	},
 	{
 		"question": "Q. What else can TomBot do?",
