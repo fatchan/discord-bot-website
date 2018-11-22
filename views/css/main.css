@@ -19,7 +19,7 @@
 	}
 	body {
 		margin:0px;
-		font-family: 'Karla', sans-serif;
+		font-family: Arial, Helvetica, sans-serif;
 		display: flex;
 		flex-direction: column;
 	}
@@ -32,7 +32,7 @@
 	}
 	.navbar {
 		border-bottom: 1px rgba(0, 0, 0, 0.08) solid;
-		font-family: 'Karla', sans-serif;
+		font-family: Arial, Helvetica, sans-serif;
 		z-index:2;
 		position: fixed;
 		top: 0;
@@ -153,7 +153,7 @@
 	}
 	table {
 		width: 100%;
-		font-family: 'Karla', sans-serif;
+		font-family: Arial, Helvetica, sans-serif;
 		border-collapse: collapse;
 	}
 	table, th, td {
@@ -186,12 +186,7 @@
 	.section {
 		border-radius:5px;
 		overflow: hidden;
-		/*word-break: break-all;*/
-		padding: 15px;
-		border: 1px rgba(0, 0, 0, 0.08) solid;
-	}
-	.section-tile {
-		border: 1px rgba(0, 0, 0, 0.08) solid;
+		padding: 25px;
 	}
 	.section-heading {
 		margin: 0;
