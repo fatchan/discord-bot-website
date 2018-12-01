@@ -31,9 +31,11 @@
 			},
 			{
 				"name": "top",
-				"args": "[page]",
-				"description": "show points scoreboard",
+				"args": "[type]",
+				"description": "show top votes or points. defaults to points.",
 				"examples": [
+					">top votes",
+					">top points",
 					">top"
 				]
 			},
@@ -289,6 +291,15 @@
 				"description": "change the channel of now playing messages to the current channel",
 				"examples": [
 					">config-channel"
+				]
+			},
+			{
+				"name": "config-limit",
+				"args": "<HH:mm:ss>",
+				"description": "set song length limit. time string to set, 0 to disable.",
+				"examples": [
+					">config-limit 0",
+					">config-limit 30:00"
 				]
 			},
 			{

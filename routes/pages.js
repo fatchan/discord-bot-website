@@ -75,6 +75,9 @@ module.exports = function(client, config) {
     router.get('/support', (req, res) => {
         res.redirect(info.supportURL);
     });
+    router.get('/discord', (req, res) => {
+        res.redirect(info.supportURL);
+    });
     router.get('/invite', (req, res) => {
         res.redirect(info.inviteURL);
     });
