@@ -160,6 +160,14 @@
 				]
 			},
 			{
+				"name": "leave",
+				"args": "",
+				"description": "leave the voice channel forcefully",
+				"examples": [
+					">leave"
+				]
+			},
+			{
 				"name": "loop",
 				"args": "",
 				"description": "toggle queue looping",
