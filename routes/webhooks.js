@@ -38,6 +38,7 @@ module.exports = function(client, config) {
 
 	router.post('/donatebotwebhook', async (req, res) => {
 		const auth = req.headers['authorization'];
+		console.log('POST /donatebotwebhook\n', auth, req.body);
 		if(!auth) {
 			res.status(403).json({error:'Unauthorised'})
 		} else if (auth == config.donateSecret) {
@@ -79,7 +80,11 @@ module.exports = function(client, config) {
 					}
 */
 					if (blacklistData.length > 0) {
-						blacklistDB.insertMany(blacklistData)
+						try {
+							blacklistDB.insertMany(blacklistData)
+						} catch (e) {
+							console.log('Blacklist insert error.\n', e)
+						}
 					}
 					break;
 				case 'refunded':
