@@ -55,8 +55,8 @@
 		"commands": [
 			{
 				"name": "play",
-				"args": "[-now] <URL or search terms>",
-				"description": "play music from a link or search terms, start with -now to add to start of queue instead of end",
+				"args": "[-now|-next] <URL or search terms>",
+				"description": "play music from a link or search terms, start with -now to play immediately, or -next to add it after the currently playing song",
 				"examples": [
 					">play darude sandstorm",
 					">play https://youtu.be/y6120QOlsfU",
@@ -128,17 +128,26 @@
 				]
 			},
 			{
-				"name": "skip",
-				"args": "",
-				"description": "skip current song",
+				"name": "queue-swap",
+				"args": "<first number> <second number>",
+				"description": "swap the position of 2 songs in the queue",
 				"examples": [
-					">skip"
+					">queue-swap 1 5"
+				]
+			},
+			{
+				"name": "skip",
+				"args": "[amount]",
+				"description": "skip current song, or multiple songs",
+				"examples": [
+					">skip",
+					">skip 5"
 				]
 			},
 			{
 				"name": "summon",
 				"args": "",
-				"description": "summon the bot to another channel",
+				"description": "summon the bot to you voice channel",
 				"examples": [
 					">summon"
 				]
@@ -170,17 +179,18 @@
 			{
 				"name": "loop",
 				"args": "",
-				"description": "toggle queue looping",
+				"description": "switch queue looping modes between 1, on or off. 1 will loop the current song, on wil repeat the whole queue, false will not loop in any way.",
 				"examples": [
 					">loop"
 				]
 			},
 			{
 				"name": "shuffle",
-				"args": "",
-				"description": "shuffle the queue",
+				"args": "[-now]",
+				"description": "shuffle the queue, use -now to start playing the next song immediately",
 				"examples": [
-					">shuffle"
+					">shuffle",
+					">shuffle -now"
 				]
 			}
 		]
@@ -233,17 +243,33 @@
 			{
 				"name": "playlist-add",
 				"args": "<playlist name> [index] <url/search terms>",
-				"description": "add music to an existing playlist. Either append it on the end, or specity a position to insert instead.",
+				"description": "add music to an existing playlist. either append it on the end, or specity a position to insert instead.",
 				"examples": [
 					">playlist-add potato the duck song"
 				]
 			},
 			{
 				"name": "playlist-remove",
-				"args": "<playlist name> [starting index] [amount]",
-				"description": "remove items from a playlist.",
+				"args": "<playlist name> <starting index> <amount>",
+				"description": "remove items from a playlist starting from an index and specifying the amount.",
 				"examples": [
 					">playlist-remove potato 3 1"
+				]
+			},
+			{
+				"name": "playlist-swap",
+				"args": "<playlist name> <first number> <second number>",
+				"description": "swap the position of 2 songs in a playlist.",
+				"examples": [
+					">playlist-swap potato 6 17"
+				]
+			},
+			{
+				"name": "playlist-rename",
+				"args": "<playlist name> <new name>",
+				"description": "rename a playlist.",
+				"examples": [
+					">playlist-rename potato apple"
 				]
 			},
 			{
