@@ -1,9 +1,17 @@
 {
-		"dbURL": "mongodb://user:pass@host:port/authdb",
-        "statsDbName": "xxxxxxxxxxx",
-        "sessionDbName": "xxxxxxxxxxx",
-		"passportClientID": "12398074912930874",
-		"passportClientSecret": "xxxxxxxxxxxxxxxxxxxxx",
-		"defaultTheme": "light",
-		"sessionSecret": "xxxxxxxxxxxxxxxxxxxxx"
+	"dbURL": "mongodb://user:pass@host:port/authdb",
+	"statsDbName": "xxxxxxxxxxx",
+	"sessionDbName": "xxxxxxxxxxx",
+	"passportClientID": "12398074912930874",
+	"passportClientSecret": "xxxxxxxxxxxxxxxxxxxxx",
+	"defaultTheme": "light",
+	"sessionSecret": "xxxxxxxxxxxxxxxxxxxxx",	
+	"patreonSecret": "xxxxxxxxxxxxxxxxxxxxx",
+	"donateSecret": "xxxxxxxxxxxxxxxxxxxxx",
+	"dblAuth": "xxxxxxxxxxxxxxxxxxxxx",
+	"webhookID": "1111111111",
+	"webhookToken": "xxxxxxxxxxxxxxxxxxxxx",
+	"cacheHours": 12,
+	"defaultStyle": "light",
+	"port": 5555
 }
