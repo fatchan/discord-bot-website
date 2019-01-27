@@ -1,17 +1,22 @@
 const express = require('express')
 	, router = express.Router()
-	, websocket = require('../websocket.js')
 	, info  = require('../configs/info.json')
     , commands = require('../configs/commands.json')
     , faq = require('../configs/faq.json')
     , widgets = require('../configs/widgets.json')
 	, passport = require('passport')
+	, config  = require('../configs/main.json')
+	, Stats = require('../stats.js')
+	, Mongo = require('../mongo.js')
 
-module.exports = function(client, config) {
+module.exports = () => {
 
-    const gsetDB = client.db(config.statsdbName).collection('gsets');
-    const playlistDB = client.db(config.statsdbName).collection('playlists');
-    const permsDB = client.db(config.statsdbName).collection('permissions');
+	/*
+	TODO: actually implement this
+    const gsetDB = Mongo.getClient().db(config.statsdbName).collection('gsets');
+    const playlistDB = Mongo.getClient().db(config.statsdbName).collection('playlists');
+    const permsDB = Mongo.getClient().db(config.statsdbName).collection('permissions');
+	*/
 
     router.get('/', (req, res) => {
         res.render('homepage', {
@@ -21,9 +26,10 @@ module.exports = function(client, config) {
             configs: info,
             csrf: req.csrfToken(),
             widgets: widgets,
-            stats: websocket.getStats().tombot
+            stats: Stats.getStats()
         });
     });
+	
     router.get('/commands', (req, res) => {
         res.render('commands', {
             cache: true,
@@ -34,6 +40,7 @@ module.exports = function(client, config) {
             csrf: req.csrfToken()
         });
     });
+	
     router.get('/dashboard', checkAuth, (req, res) => {
         res.render('dashboard', {
             cache: true,
@@ -43,9 +50,11 @@ module.exports = function(client, config) {
             csrf: req.csrfToken()
         });
     });
+	
     router.get('/stats', (req, res) => {
 		res.redirect('https://p.datadoghq.com/sb/221cba9d3-d4cbc9ce9de358694de7dc7c2bc88838')
     });
+	
     router.get('/faq', (req, res) => {
         res.render('faq', {
             cache: true,
@@ -56,6 +65,7 @@ module.exports = function(client, config) {
             csrf: req.csrfToken()
         });
     });
+	
     router.get('/vip', (req, res) => {
         res.render('vip', {
             cache: true,
@@ -65,36 +75,48 @@ module.exports = function(client, config) {
             csrf: req.csrfToken()
         });
     });
+	
     router.get('/callback',
         passport.authenticate('discord', { failureRedirect: '/' }),
         (req, res) => { res.redirect('/dashboard') } // auth success
     );
+	
     router.get('/vote', (req, res) => {
         res.redirect(info.voteURL);
     });
+	
     router.get('/support', (req, res) => {
         res.redirect(info.supportURL);
     });
+	
     router.get('/discord', (req, res) => {
         res.redirect(info.supportURL);
     });
+	
     router.get('/invite', (req, res) => {
         res.redirect(info.inviteURL);
     });
+	
     router.get('/github', (req, res) => {
         res.redirect(info.githubURL);
     });
+	
     router.get('/robots.txt', (req, res) => {
         res.type('text/plain');
         res.send('User-agent: *\nDisallow:');
     });
-/*	router.get('/api/guilds/:guildid', dashboardGuildCheck, (req, res) => {
+	
+	/*	
+	router.get('/api/guilds/:guildid', dashboardGuildCheck, (req, res) => {
 		res.json({guild:res.locals.guild, settings:res.locals.settings.value, permissions:res.locals.permissions.value});
-	})*/
+	})
+	*/
+	
 	router.get('/login',
         passport.authenticate('discord', { scope: ['identify', 'guilds'] }),
         (req, res) => {}
     );
+	
     router.get('*', (req, res) => {
         res.status(404).render('404', {
             cache: true,
@@ -104,10 +126,12 @@ module.exports = function(client, config) {
             csrf: req.csrfToken()
         });
     });
+	
     router.post('/logout', checkAuth, (req, res) => {
         req.logout();
         res.redirect('/');
     });
+	
 	function checkAuth(req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
@@ -115,6 +139,7 @@ module.exports = function(client, config) {
 			return res.redirect('/login')
 		}
 	}
+	
 	async function dashboardGuildCheck(req, res, next) {
         if (req.params.guildid) {
             const guild = req.user.guilds.find(guild => guild.id === req.params.guildid);

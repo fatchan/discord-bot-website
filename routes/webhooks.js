@@ -10,13 +10,15 @@ const express = require('express')
 	, fetch = require('node-fetch')
 	, StatsD = require('node-dogstatsd').StatsD
 	, dd = new StatsD()
+	, config  = require('../configs/main.json')
+	, Mongo = require('../mongo.js')
 
-module.exports = function(client, config) {
+module.exports = function() {
 
-	const votesDB = client.db(config.statsdbName).collection('votes');
-	const donateDB = client.db(config.statsdbName).collection('donate');
-	const blacklistDB = client.db(config.statsdbName).collection('blacklist');
-	const pointsDB = client.db(config.statsdbName).collection('points');
+	const votesDB = Mongo.getClient().db(config.statsdbName).collection('votes');
+	const donateDB = Mongo.getClient().db(config.statsdbName).collection('donate');
+	const blacklistDB = Mongo.getClient().db(config.statsdbName).collection('blacklist');
+	const pointsDB = Mongo.getClient().db(config.statsdbName).collection('points');
 
 	router.post('/patreonwebhook', (req, res) => {
 		if (req.headers && req.headers['x-patreon-signature']) {
@@ -74,11 +76,6 @@ module.exports = function(client, config) {
 					break;
 				case 'reversed':
 					const blacklistData = donateData.guildIDs.map(x => { return {_id:x.id, value:'donation chargeback'} });
-/* might cause peple to donate for somebody else and charges back
-					if (donateData.buyer_id) {
-						blacklistData.push({_id:donateData.buyer_id, value:'donation chargeback'})
-					}
-*/
 					if (blacklistData.length > 0) {
 						try {
 							blacklistDB.insertMany(blacklistData)

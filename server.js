@@ -1,6 +1,5 @@
 'use strict';
 const session  = require('express-session')
-	, express = require('express')
 	, MongoStore = require('connect-mongo')(session)
 	, passport = require('passport')
 	, Strategy = require('passport-discord').Strategy
@@ -9,8 +8,10 @@ const session  = require('express-session')
 	, csrf = require('csurf')
 	, bodyParser = require('body-parser')
 	, cookieParser = require('cookie-parser')
+	, config  = require('./configs/main.json')
+	, Mongo = require('./mongo.js')
 
-module.exports = (app, client, config) => {
+module.exports = (app) => {
 
 	//passport for discord
 	passport.serializeUser((user, done) => {
@@ -35,7 +36,7 @@ module.exports = (app, client, config) => {
 	app.set('views', path.join(__dirname, 'views'));
 	app.use(session({
 		secret: config.sessionSecret,
-		store: new MongoStore({ db: client.db(config.sessionDbName) }),
+		store: new MongoStore({ db: Mongo.getClient().db(config.sessionDbName) }),
 		resave: false,
 		saveUninitialized: false,
 	}));
@@ -50,10 +51,10 @@ module.exports = (app, client, config) => {
 		//allow for discord bot listing sites
 		frameguard: false
 	}))
-
+	
 	//setup routes
-	const pages = require('./routes/pages.js')(client, config);
-	const webhooks = require('./routes/webhooks.js')(client, config);
+	const pages = require('./routes/pages.js')();
+	const webhooks = require('./routes/webhooks.js')();
 	app.use('/', webhooks);
 	app.use(csrf())
 	app.use('/', pages);
@@ -64,6 +65,6 @@ module.exports = (app, client, config) => {
 			return res.status(500).send('Something broke!');
 		}
 		res.status(403);
-		res.send('HALT!'); //invalid csrf token
+		res.send('Forbidden'); //invalid csrf token
 	})
 }
