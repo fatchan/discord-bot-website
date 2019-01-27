@@ -7,15 +7,15 @@ const express = require('express')
 	, passport = require('passport')
 	, config  = require('../configs/main.json')
 	, Stats = require('../stats.js')
-	, Mongo = require('../mongo.js')
+	, Mongo = require('../mongo.js');
 
 module.exports = () => {
 
 	/*
 	TODO: actually implement this
-    const gsetDB = Mongo.getClient().db(config.statsdbName).collection('gsets');
-    const playlistDB = Mongo.getClient().db(config.statsdbName).collection('playlists');
-    const permsDB = Mongo.getClient().db(config.statsdbName).collection('permissions');
+    const gsetDB = Mongo.client.db(config.statsdbName).collection('gsets');
+    const playlistDB = Mongo.client.db(config.statsdbName).collection('playlists');
+    const permsDB = Mongo.client.db(config.statsdbName).collection('permissions');
 	*/
 
     router.get('/', (req, res) => {
@@ -26,7 +26,7 @@ module.exports = () => {
             configs: info,
             csrf: req.csrfToken(),
             widgets: widgets,
-            stats: Stats.getStats()
+            stats: Stats.tombot
         });
     });
 	

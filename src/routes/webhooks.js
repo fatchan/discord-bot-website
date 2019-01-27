@@ -11,14 +11,14 @@ const express = require('express')
 	, StatsD = require('node-dogstatsd').StatsD
 	, dd = new StatsD()
 	, config  = require('../configs/main.json')
-	, Mongo = require('../mongo.js')
+	, Mongo = require('../mongo.js');
 
 module.exports = function() {
 
-	const votesDB = Mongo.getClient().db(config.statsdbName).collection('votes');
-	const donateDB = Mongo.getClient().db(config.statsdbName).collection('donate');
-	const blacklistDB = Mongo.getClient().db(config.statsdbName).collection('blacklist');
-	const pointsDB = Mongo.getClient().db(config.statsdbName).collection('points');
+	const votesDB = Mongo.client.db(config.statsdbName).collection('votes');
+	const donateDB = Mongo.client.db(config.statsdbName).collection('donate');
+	const blacklistDB = Mongo.client.db(config.statsdbName).collection('blacklist');
+	const pointsDB = Mongo.client.db(config.statsdbName).collection('points');
 
 	router.post('/patreonwebhook', (req, res) => {
 		if (req.headers && req.headers['x-patreon-signature']) {
@@ -31,10 +31,10 @@ module.exports = function() {
 				res.status(200).set("Connection", "close").end();
 			} else {
 				console.log("Bad hash! " + hash + " crypted " + crypted);
-				res.status(403).json({error:'Unauthorised'})
+				res.status(403).json({error:'Unauthorised'});
 			}
 		} else {
-			res.status(403).json({error:'Unauthorised'})
+			res.status(403).json({error:'Unauthorised'});
 		}
 	});
 
@@ -44,18 +44,18 @@ module.exports = function() {
 		if(!auth) {
 			res.status(403).json({error:'Unauthorised'})
 		} else if (auth == config.donateSecret) {
-			const donateData = req.body
-			const key = donateData.txn_id
+			const donateData = req.body;
+			const key = donateData.txn_id;
 			const oldDonateData = await donateDB.findOne({_id: key});
-			donateData._id = donateData.txn_id
-			delete donateData.txn_id;
+			donateData._id = donateData.txn_id;
+			delete donateData.txn_id;;
 			try {
 				if (oldDonateData) {
-					donateData.tokens = (donateData.status != 'completed' ? 0 : oldDonateData.tokens)
-					donateData.guildIDs = oldDonateData.guildIDs
-					await donateDB.replaceOne({_id: key}, donateData)
+					donateData.tokens = (donateData.status != 'completed' ? 0 : oldDonateData.tokens);
+					donateData.guildIDs = oldDonateData.guildIDs;
+					await donateDB.replaceOne({_id: key}, donateData);
 				} else {
-					donateData.guildIDs = []
+					donateData.guildIDs = [];
 					if (+donateData.price == 3.99) {
 						donateData.tokens = 1; //3.99 per token
 					} else if (+donateData.price >= 8.99) {
@@ -63,13 +63,13 @@ module.exports = function() {
 					} else {
 						donateData.tokens = 0;
 					}
-					await donateDB.insertOne(donateData)
+					await donateDB.insertOne(donateData);
 				}
 			} catch(e) {
-				console.error('DONATION ERROR', e)
-				return res.status(403).json({error:'DB error'})
+				console.error('DONATION ERROR', e);
+				return res.status(403).json({error:'DB error'});
 			}
-			console.log('\nSUCCESSFUL DONATEBOT WEBHOOK:\n', donateData)
+			console.log('\nSUCCESSFUL DONATEBOT WEBHOOK:\n', donateData);
 			switch (donateData.status) {
 				case 'completed':
 					// NO NEED TO DO ANYTHING -- HANDLE THE REST IN COMMAND
@@ -78,9 +78,9 @@ module.exports = function() {
 					const blacklistData = donateData.guildIDs.map(x => { return {_id:x.id, value:'donation chargeback'} });
 					if (blacklistData.length > 0) {
 						try {
-							blacklistDB.insertMany(blacklistData)
+							blacklistDB.insertMany(blacklistData);
 						} catch (e) {
-							console.log('Blacklist insert error.\n', e)
+							console.log('Blacklist insert error.\n', e);
 						}
 					}
 					break;
@@ -93,21 +93,21 @@ module.exports = function() {
 				default:
 					console.warn('Unexpected donatebot status: ', donateData.status);
 			}
-			return res.status(200).json({success:true})
+			return res.status(200).json({success:true});
 		} else {
-			return res.status(403).json({error:'Unauthorised'})
+			return res.status(403).json({error:'Unauthorised'});
 		}
 	});
 
 	router.post('/dblwebhook', (req, res) => {
 		const auth = req.headers['authorization'];
 		if(!auth) {
-			res.status(403).json({error:'Unauthorised'})
+			res.status(403).json({error:'Unauthorised'});
 		} else {
 			if (auth == config.dblAuth) {
-				const botdata = req.body
+				const botdata = req.body;
 				console.info('VOTE  | '+botdata.user);
-				dd.increment('tombot.vote')
+				dd.increment('tombot.vote');
 				votesDB.replaceOne({_id: botdata.user.toString()},{_id: botdata.user.toString(),value: true,expireAt: new Date((new Date).getTime() + (config.cacheHours*1000*60*60))},{upsert: true});
 				pointsDB.updateOne({_id: botdata.user.toString()},{$inc:{votes: 1}});
 				const body = {embeds: [{
@@ -120,9 +120,9 @@ module.exports = function() {
 					body: JSON.stringify(body),
 					headers: { 'Content-Type': 'application/json' }
 				});
-				res.json({success:true})
+				res.json({success:true});
 			} else {
-				res.status(403).json({error:'Unauthorised'})
+				res.status(403).json({error:'Unauthorised'});
 			}
 		}
 	})

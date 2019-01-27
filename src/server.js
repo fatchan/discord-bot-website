@@ -1,4 +1,5 @@
 'use strict';
+
 const session  = require('express-session')
 	, MongoStore = require('connect-mongo')(session)
 	, passport = require('passport')
@@ -9,7 +10,7 @@ const session  = require('express-session')
 	, bodyParser = require('body-parser')
 	, cookieParser = require('cookie-parser')
 	, config  = require('./configs/main.json')
-	, Mongo = require('./mongo.js')
+	, Mongo = require('./mongo.js');
 
 module.exports = (app) => {
 
@@ -36,7 +37,7 @@ module.exports = (app) => {
 	app.set('views', path.join(__dirname, 'views'));
 	app.use(session({
 		secret: config.sessionSecret,
-		store: new MongoStore({ db: Mongo.getClient().db(config.sessionDbName) }),
+		store: new MongoStore({ db: Mongo.client.db(config.sessionDbName) }),
 		resave: false,
 		saveUninitialized: false,
 	}));
@@ -67,4 +68,5 @@ module.exports = (app) => {
 		res.status(403);
 		res.send('Forbidden'); //invalid csrf token
 	})
+	
 }
