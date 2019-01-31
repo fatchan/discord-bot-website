@@ -38,9 +38,70 @@ module.exports = function() {
 		}
 	});
 
+	router.get('/donohook', async (req, res) => {
+		const auth = req.headers['cf-connecting-ip'];
+		if(auth != '149.56.110.177') {
+			return res.status(403).json({error:'Unauthorised'});
+		}
+		const donateData = {
+			_id: req.query['txn_id'],
+			status: req.query['status'],
+			buyer_id: req.query['user_id'],
+			user_tag: req.query['user_tag'],
+			price: req.query['amount'],
+			currency: req.query['currency'],
+		};
+		const key = donateData._id;
+		const oldDonateData = await donateDB.findOne({ _id: key });
+		try {
+			if (oldDonateData) {
+				donateData.tokens = (donateData.status != 'completed' ? 0 : oldDonateData.tokens);
+				donateData.guildIDs = oldDonateData.guildIDs;
+				await donateDB.replaceOne({_id: key}, donateData);
+			} else {
+				donateData.guildIDs = [];
+				if (+donateData.price == 4) {
+					donateData.tokens = 1; //3.99 per token
+				} else if (+donateData.price == 9) {
+					donateData.tokens = 3; //2.99 per token
+				} else {
+					donateData.tokens = 0; //other amounts no tokens
+				}
+				await donateDB.insertOne(donateData);
+			}
+		} catch(e) {
+			console.error('DONATION ERROR', e);
+			return res.status(403).json({error:'DB error'});
+		}
+		switch (donateData.status) {
+			case 'completed':
+				// NO NEED TO DO ANYTHING -- HANDLE THE REST IN COMMAND
+				break;
+			case 'reversed':
+				const blacklistData = donateData.guildIDs.map(x => { return {_id:x.id, value:'donation chargeback'} });
+				if (blacklistData.length > 0) {
+					try {
+						blacklistDB.insertMany(blacklistData);
+					} catch (e) {
+						console.log('Blacklist insert error.\n', e);
+					}
+				}
+				break;
+			case 'refunded':
+				// NEED IPC TO HANDLE REFUNDS
+				break;
+			case 'sub_ended':
+				// NOT BUSINESS PAYPAL SO NO SUB HANDLING
+				break;
+			default:
+				console.warn('Unexpected status: ', donateData.status);
+				return res.status(500).json({error:'Unexpected status'})
+		}
+		return res.status(200).json({success:true});
+	});
+	
 	router.post('/donatebotwebhook', async (req, res) => {
 		const auth = req.headers['authorization'];
-		console.log('POST /donatebotwebhook\n', auth, req.body);
 		if(!auth) {
 			res.status(403).json({error:'Unauthorised'})
 		} else if (auth == config.donateSecret) {
@@ -48,7 +109,7 @@ module.exports = function() {
 			const key = donateData.txn_id;
 			const oldDonateData = await donateDB.findOne({_id: key});
 			donateData._id = donateData.txn_id;
-			delete donateData.txn_id;;
+			delete donateData.txn_id;
 			try {
 				if (oldDonateData) {
 					donateData.tokens = (donateData.status != 'completed' ? 0 : oldDonateData.tokens);
@@ -69,7 +130,6 @@ module.exports = function() {
 				console.error('DONATION ERROR', e);
 				return res.status(403).json({error:'DB error'});
 			}
-			console.log('\nSUCCESSFUL DONATEBOT WEBHOOK:\n', donateData);
 			switch (donateData.status) {
 				case 'completed':
 					// NO NEED TO DO ANYTHING -- HANDLE THE REST IN COMMAND
@@ -130,3 +190,5 @@ module.exports = function() {
 	return router;
 
 }
+
+
