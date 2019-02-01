@@ -1,39 +1,33 @@
-	html {
-		color:black;
-	}
-    .theme-reactive {
-        filter: grayscale(100%);
-    }
-	.navbar {
-	    background-color: #7289da;
-	}
-	.sidebar {
-		background-color:#F1F1F1;
-	}
-	.footer {
-		background: #f1f1f1;
-	}
-	.footer-button {
-		color: black;
-	}
-	.home-button, .navbar-button {
-		background-color: #7289DA;
-	}
-	.table-selector {
-		background-color: #7289DA;
-	}
-	.table-selector:hover, a.home-button:hover, a.navbar-button:hover, button.navbar-button:hover {
-		background-color: #7e9bff;
-	}
-	.cover-trial {
-		/*background: #f1f1f1;*/
-	}
-	.section {
-		/*background: #f1f1f1;*/
-	}
-	.section-tile {
-		/*background:white;*/
-	}
-	h2 {
-		color:#7289DA;
-	}
+html {
+	color:black;
+}
+.navbar {
+    background-color: #7289da;
+}
+.sidebar {
+	background-color:#F1F1F1;
+}
+.footer {
+	background: #f1f1f1;
+}
+.footer-button {
+	color: black;
+}
+.home-button, .navbar-button {
+	background-color: #7289DA;
+}
+.table-selector {
+	background-color: #7289DA;
+}
+.table-selector:hover, a.home-button:hover, a.navbar-button:hover, button.navbar-button:hover {
+	background-color: #7e9bff;
+}
+h2 {
+	color:#7289DA;
+}
+.widget {
+	background: url("https://discordbots.org/api/widget/346577085155901451.svg?usernamecolor=fff&topcolor=7289da&middlecolor=fff&highlightcolor=f1f1f1&datacolor=000") no-repeat;
+	display: inline-block;
+	min-height: 150px;
+	min-width: 300px;
+}

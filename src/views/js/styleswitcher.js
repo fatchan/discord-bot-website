@@ -1,47 +1,30 @@
 function setActiveStyleSheet(title) {
-  var i, a, main;
-  for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-    if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
-      a.disabled = true;
-      if(a.getAttribute("title") == title) {
-        a.disabled = false;
-		$.cookie("style", title, { path: '/', expires: 7 });
-      }
-    }
-  }
+	$('link').each((i, elem) => {
+		elem = $(elem);
+	    if (elem.attr('rel').includes('style') && elem.attr('title')) {
+			elem.prop('disabled', elem.attr('title') !== title);
+	    }
+	})
+	$.cookie("style", title, { path: '/', expires: 7 });
 }
 
 function togglestyle() {
-	var title = $.cookie("style");
-	if(title == 'light') {
-		setActiveStyleSheet('dark')
+	const title = $.cookie("style");
+	if(title === 'light') {
+		setActiveStyleSheet('dark');
 	} else {
-		setActiveStyleSheet('light')
-	}
-	setGraphLine();
-}
-
-function togglenavbar() {
-	$('.navbar-toggle').toggleClass('mobile-shown')
-}
-
-function setGraphLine() {
-	if ($('#chartContainer1').length >= 1 && $.cookie("style")) {
-		if ($.cookie("style") == 'dark') {
-			newColor('#fff');
-		} else {
-			newColor('#000');
-		}
+		setActiveStyleSheet('light');
 	}
 }
 
-$( document ).ready(function() {
-	setGraphLine();
-	var button = document.getElementById('styleswitcher');
-	button.onclick = function() {
+$(document).ready(() => {
+
+	$('#styleswitcher').click(() => {
 		togglestyle();
-	};
-	$('.navbar-toggle').click(function() {
+	});
+
+	$('.navbar-toggle').click(() => {
 		$('.navbar').toggleClass('mobile-shown');
 	});
+
 });

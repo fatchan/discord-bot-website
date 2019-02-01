@@ -3,7 +3,6 @@ const express = require('express')
 	, info  = require('../configs/info.json')
     , commands = require('../configs/commands.json')
     , faq = require('../configs/faq.json')
-    , widgets = require('../configs/widgets.json')
 	, passport = require('passport')
 	, config  = require('../configs/main.json')
 	, Stats = require('../stats.js')
@@ -25,7 +24,6 @@ module.exports = () => {
             user: req.user,
             configs: info,
             csrf: req.csrfToken(),
-            widgets: widgets,
             stats: Stats.tombot
         });
     });
