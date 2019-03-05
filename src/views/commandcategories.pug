@@ -9,7 +9,11 @@ each category in commands
 					code(style='color: #ff3860;font-weight: bolder;font-size: 12pt;') #{command.name} #{command.args}
 					br
 					p #{command.description}
-					ul(style='margin-bottom:0;') Examples:
+					ul Examples:
 						each example in command.examples
 							li
 								code(style='color: #ff3860;') #{example}
+					if command.aliases
+						p Aliases:
+						code(style='color: #ff3860;') #{command.aliases.join(', ')}
+					

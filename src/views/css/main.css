@@ -198,6 +198,9 @@
 	hr {
 		border: 0;
 	}
+	ul {
+		padding-left: 0px;
+	}
 	li{
 		list-style-position: inside;
 		margin: 0px;
