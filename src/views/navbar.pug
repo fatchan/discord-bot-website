@@ -4,23 +4,6 @@ div(class='navbar')
 		object(class='home-button-icon' width=50 height=50 data='/img/tombot.png' type='image/png')
 		. 
 			Home
-	if !user
-		a(class='navbar-button' href='/login')
-			i(class='fas fa-sign-in-alt')
-			.
-				Login
-	else 
-		form(class='navbar-button' style='padding:0px;margin:0px;height:50px;' action="/logout" method="post")
-			input(type='hidden' name='_csrf' value=csrf)
-			button(class='navbar-button' style='height: 50px;cursor: pointer;border:none;color:inherit;font: inherit;' name='Logout' value='Logout')
-				i(class='fas fa-sign-out-alt')
-				.
-					Logout
-		a(class='navbar-button' href='/dashboard')
-			i(class='fas fa-columns')
-			.
-				#{user.username}##{user.discriminator}
-	div(class='navbar-space')
 	a(class='navbar-button' href='/vote')
 		i(class='fas fa-chevron-circle-up')
 		.
