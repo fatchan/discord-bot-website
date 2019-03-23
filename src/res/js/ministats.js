@@ -10,10 +10,10 @@ function updatechart(data) {
 	}
 	var users = document.getElementById('stats-users')
 	if (users && users.textContent != data.users) {
-		users.textContent = data.guilds.toLocaleString();
+		users.textContent = data.users.toLocaleString();
 	}
 	var streams = document.getElementById('stats-streams')
 	if (streams && streams.textContent != data.totalVoiceConnections) {
-		streams.textContent = data.guilds.toLocaleString();
+		streams.textContent = data.totalVoiceConnections.toLocaleString();
 	}
 }
