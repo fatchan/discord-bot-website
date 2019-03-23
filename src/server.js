@@ -4,6 +4,7 @@ const path     = require('path')
 	, helmet = require('helmet')
 	, config  = require('./configs/main.json')
 	, cookieParser = require('cookie-parser')
+	, bodyParser = require('body-parser')
 
 module.exports = (app) => {
 
@@ -11,6 +12,10 @@ module.exports = (app) => {
 	app.set('view engine', 'pug');
 	app.set('views', path.join(__dirname, 'views'));
 	app.use(cookieParser());
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({
+		extended: false
+	}))
 	app.use(helmet({
 		//allow for discord bot listing sites
 		frameguard: false
