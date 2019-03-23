@@ -1,17 +1,15 @@
 'use strict';
 
-const path     = require('path')
+const path = require('path')
 	, helmet = require('helmet')
 	, config  = require('./configs/main.json')
-	, cookieParser = require('cookie-parser')
-	, bodyParser = require('body-parser')
+	, bodyParser = require('body-parser');
 
 module.exports = (app) => {
 
 	//setup middlewares
 	app.set('view engine', 'pug');
-	app.set('views', path.join(__dirname, 'views'));
-	app.use(cookieParser());
+	app.set('views', path.join(__dirname, 'views/pages'));
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({
 		extended: false
@@ -20,6 +18,8 @@ module.exports = (app) => {
 		//allow for discord bot listing sites
 		frameguard: false
 	}))
+
+	//app.use(require('express').static(__dirname+'/../dist'));
 
 	//setup routes
 	const pages = require('./routes/pages.js')();

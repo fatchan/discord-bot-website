@@ -1,8 +1,11 @@
-extends layout.pug
+extends ../layout.pug
+
+block scripts
+	script(defer src='/js/jquery-3.3.1.js')
 
 block content
 	div(class='section' style='margin: 5px;margin-top: 55px;')
 		h1(class='section-heading') Command Docs
 		hr
-		include commandcategories.pug
+		include ../includes/commandcategories.pug
 		script(defer src='/js/categoryscript.js' type='text/javascript')

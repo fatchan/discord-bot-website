@@ -5,14 +5,13 @@ meta(name='viewport' content='width=device-width, initial-scale=1.0, user-scalab
 meta(name='description' content='TomBot is an advanced bot for Discord featuring Music playback from youtube/twitch/soundcloud/spotify/radio, Cards Against Humanity, Connect 4, Blackjack, Hangman and more!')
 
 style(type='text/css')
-	include ../../dist/css/main.css
-link(rel=(style=='light'?'stylesheet':'alternate stylesheet') type='text/css' title='light' href='/css/light.css')
-link(rel=(style=='dark'?'stylesheet':'alternate stylesheet') type='text/css' title='dark' href='/css/dark.css')
+	include ../../../dist/css/main.css
+	include ../../../dist/css/light.css
+script(type='text/javascript')
+	include ../../../dist/js/theme.js
+
 link(rel='stylesheet' href='/css/fontawesome.css')
 link(rel='shortcut icon' href='/img/tombot.png' type='image/x-icon')
-
-script(defer src='/js/jquery-3.3.1.js')
-script(defer src='/js/jquery-cookie.js')
 
 // twitter cards
 meta(name='twitter:card' content='TomBot')
