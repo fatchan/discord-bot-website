@@ -2,16 +2,29 @@ html {
 	background-color: #000;
 	color: white;
 }
-.footer a {
+.footer a, #styleswitcher {
 	color: white;
 }
 .navbar, .footer {
-	background-color: #000;
 	border-color: #1e1e1e;
+}
+.footer {
+	background-color: #000;
+}
+.navbar {
+	background-color: #000080;
 }
 .home-button, .navbar-button, .category-selector {
 	background-color: #000080;
 }
 h2 {
 	color: #6BB2FF;
+}
+.code-title {
+    color: #FF6666;
+    font-weight: bolder;
+    font-size: 12pt;
+}
+.code {
+	font-family: monospace;
 }

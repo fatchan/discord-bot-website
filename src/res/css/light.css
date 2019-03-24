@@ -8,8 +8,19 @@ html {
 	color: black;
 }
 .home-button, .navbar-button, .table-selector, .navbar {
-	background-color: #7289DA;
+	background-color: #2A3FA2;
+}
+.navbar {
+	background-color: #2a3fa2;
 }
 h2 {
-	color:#7289DA;
+	color:#2A3FA2;
+}
+.code-title {
+	color: #B30000;
+    font-weight: bolder;
+    font-size: 12pt;
+}
+.code {
+    font-family: monospace;
 }
