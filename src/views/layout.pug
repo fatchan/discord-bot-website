@@ -1,14 +1,17 @@
-html
+<!DOCTYPE html>
+html(lang="en")
 	head
 		include includes/head.pug
 		block scripts
 	body
 		block pre-content
 		div(class='wrapper')
-			include includes/navbar.pug
+			nav
+				include includes/navbar.pug
 			div(class='info-container')
 				div(class='middle-content')
-					block content
+					main
+						block content
 		
 		block pre-footer
 		include includes/footer.pug
