@@ -10,6 +10,7 @@ module.exports = (app) => {
 	//setup middlewares
 	app.set('view engine', 'pug');
 	app.set('views', path.join(__dirname, 'views/pages'));
+	app.enable('view cache')
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({
 		extended: false

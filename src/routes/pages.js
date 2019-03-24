@@ -12,7 +12,6 @@ module.exports = () => {
 
 	router.get('/', (req, res) => {
 		res.render('homepage', {
-			cache: true,
 			configs: info,
 			stats: Stats.tombot
 		});
@@ -20,7 +19,6 @@ module.exports = () => {
 
 	router.get('/commands', (req, res) => {
 		res.render('commands', {
-			cache: true,
 			configs: info,
 			commands: commands,
 		});
@@ -28,7 +26,6 @@ module.exports = () => {
 
 	router.get('/faq', (req, res) => {
 		res.render('faq', {
-			cache: true,
 			configs: info,
 			faq: faq,
 		});
@@ -36,7 +33,6 @@ module.exports = () => {
 
 	router.get('/vip', (req, res) => {
 		res.render('vip', {
-			cache: true,
 			configs: info,
 		});
 	});
@@ -72,7 +68,6 @@ module.exports = () => {
 
 	router.get('*', (req, res) => {
 		res.status(404).render('404', {
-			cache: true,
 			configs: info,
 		});
 	});
