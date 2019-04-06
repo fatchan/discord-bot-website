@@ -69,7 +69,7 @@ module.exports = function() {
 			console.error('DONATION ERROR', e);
 			return res.status(403).json({error:'DB error'});
 		}
-		switch (donateData.status) {
+		switch (donateData.status.toLowerCase()) {
 			case 'completed':
 				// NO NEED TO DO ANYTHING -- HANDLE THE REST IN COMMAND
 				break;
@@ -126,7 +126,7 @@ module.exports = function() {
 				console.error('DONATION ERROR', e);
 				return res.status(403).json({error:'DB error'});
 			}
-			switch (donateData.status) {
+			switch (donateData.status.toLowerCase()) {
 				case 'completed':
 					// NO NEED TO DO ANYTHING -- HANDLE THE REST IN COMMAND
 					break;

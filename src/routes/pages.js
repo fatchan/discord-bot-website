@@ -38,11 +38,15 @@ module.exports = () => {
 	});
 
 	router.get('/stats', (req, res) => {
-		res.redirect('https://p.datadoghq.com/sb/221cba9d3-d4cbc9ce9de358694de7dc7c2bc88838')
+		res.redirect('https://p.datadoghq.com/sb/221cba9d3-8368e8b79ae187e8d98e0b18cb036402?tv_mode=true')
 	});
 
 	router.get('/vote', (req, res) => {
 		res.redirect(info.voteURL);
+	});
+
+	router.get('/win', (req, res) => {
+		res.redirect(info.supportURL);
 	});
 
 	router.get('/support', (req, res) => {
