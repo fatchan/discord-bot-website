@@ -97,6 +97,7 @@ module.exports = function() {
 	});
 	
 	router.post('/donatebotwebhook', async (req, res) => {
+console.log(req.headers['authorization'], req.body)
 		const auth = req.headers['authorization'];
 		if(!auth) {
 			res.status(403).json({error:'Unauthorised'})
@@ -113,7 +114,7 @@ module.exports = function() {
 					await donateDB.replaceOne({_id: key}, donateData);
 				} else {
 					donateData.guildIDs = [];
-					if (+donateData.price == 3.99) {
+					if (+donateData.price <= 3.99) {
 						donateData.tokens = 1; //3.99 per token
 					} else if (+donateData.price >= 8.99) {
 						donateData.tokens = 3; //2.99 per token
