@@ -1,6 +1,8 @@
-
 	::-webkit-scrollbar {
 		display:none;
+	}
+	#menu:checked + .navbar {
+		max-height: 400px !important;
 	}
 	.stats-total-table {
 		white-space: nowrap;

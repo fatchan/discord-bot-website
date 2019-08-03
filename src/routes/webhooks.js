@@ -18,13 +18,13 @@ module.exports = function() {
 	const pointsDB = Mongo.client.db(config.statsdbName).collection('points');
 
 	router.post('/donatebotwebhook', async (req, res) => {
-console.log(req.body)
+console.log(req.body);
 		const auth = req.headers['authorization'];
 		if(!auth || auth !== config.donateSecret) {
 			res.status(403).json({error:'Unauthorised'})
 		}
 		const donation = req.body;
-		if (donation.status !== 'completed') {
+		if (donation.status.toLowerCase() !== 'completed') {
 //TODO: add chargeback blacklisting
 			return res.status(200).json({success:true});
 		}
