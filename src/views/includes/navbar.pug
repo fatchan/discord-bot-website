@@ -1,0 +1,36 @@
+label(for='menu' class="fas fa-bars navbar-toggle" id="hamburger")
+input#menu(type='checkbox' style="display: none;")
+div(class='navbar' id='navbar')
+	a(class='home-button' href='/')
+		object(alt='bot avatar' aria-label='bot avatar' class='home-button-icon' width=50 height=50 data='/img/tombot.png' type='image/png')
+		. 
+			Home
+	a(class='navbar-button' href='/vote')
+		i(class='fas fa-chevron-circle-up')
+		.
+			Vote
+	a(class='navbar-button' href='/support')
+		i(class='fas fa-hands-helping')
+		.
+			Support
+	a(class='navbar-button' href='/invite')
+		i(class='fas fa-robot')
+		.
+			Invite
+	a(class='navbar-button' href='/vip')
+		i(class='fas fa-dollar-sign')
+		.
+			VIP
+	div(class='navbar-space')
+	a(class='navbar-button' href='/commands')
+		i(class='fas fa-terminal')
+		.
+			Commands
+	a(class='navbar-button' href='/faq')
+		i(class='fas fa-question-circle')
+		.
+			FAQ
+	a(class='navbar-button' href='/stats')
+		i(class='fas fa-chart-line')
+		.
+			Stats

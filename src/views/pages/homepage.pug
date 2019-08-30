@@ -1,4 +1,4 @@
-extends layout.pug
+extends ../layout.pug
 
 block scripts
 	script(defer type='text/javascript' src='/js/socketio.js')
@@ -11,15 +11,15 @@ block content
 			hr
 			div(style='text-align: center;')
 				div(style='display: inline-block;width:33%;margin:0;padding:0;')
-					h2(id='stats-guilds') #{stats.guilds}
+					h2(id='stats-guilds') #{stats.guilds.toLocaleString()}
 					.
 						Servers
 				div(style='display: inline-block;width:33%;margin:0;padding:0;')
-					h2(id='stats-users') #{stats.users}
+					h2(id='stats-users') #{stats.users.toLocaleString()}
 					.
 						Users
 				div(style='display: inline-block;width:33%;margin:0;padding:0;')
-					h2(id='stats-streams') #{stats.totalVoiceConnections}
+					h2(id='stats-streams') #{stats.totalVoiceConnections.toLocaleString()}
 					.
 						Streams
 	div(class='width-wrapper')
@@ -58,10 +58,3 @@ block content
 					li Minecraft server status
 					li Overwatch stats
 					li Fun text commands
-	div(class='width-wrapper' style='--data-width-wrapper:100%;')
-		div(class='section')
-			div(class='section-content')
-				h3(class='text-align-center section-heading' style='text-align: center;') Like what you see? Vote for TomBot:
-			div(style='text-align:center;margin-top:10px;')
-				a(href='/vote')
-					img(class='widget')

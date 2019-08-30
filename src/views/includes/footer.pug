@@ -1,0 +1,12 @@
+div(class='footer')
+	div(style='margin-bottom:10px;') Made with 
+		i(class='fas fa-heart' style='margin: 5px;')
+		|  in 
+		i(class='fab fa-node-js' style='margin: 5px;')
+	a(class='footer-button fab fa-github' style='--data-hover-color: #6cc644;' href='/github' alt='github' aria-label='github')
+	div(class='footer-button fas fa-lightbulb' href='#!' style='--data-hover-color: #dada67;' id='styleswitcher' tabindex='0' aria-label='change theme')
+script(type='text/javascript').
+	var lightbulb = document.getElementById('styleswitcher');
+	lightbulb.addEventListener('click', function(e) {
+	        togglestyle();
+	});

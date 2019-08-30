@@ -1,6 +1,8 @@
-
 	::-webkit-scrollbar {
 		display:none;
+	}
+	#menu:checked + .navbar {
+		max-height: 400px !important;
 	}
 	.stats-total-table {
 		white-space: nowrap;
@@ -97,6 +99,7 @@
 		float:right;
 	}
 	.footer-button {
+		cursor: pointer;
 		font-size:35px;
 		margin-left:10px;
 		margin-right:10px;
@@ -119,14 +122,14 @@
 	.home-button, .navbar-button {
 		padding-left: 10px;
 		padding-right: 10px;
-		background-color: #7289DA;
+		background-color: #2a3fa2;
 	}
 	.category-selector {
 		width:12.5%;
 		margin:0px;
 		padding:0px;
 		text-align:center;
-		background-color: #7289DA;
+		background-color: #2a3fa2;
 	}
 	a {
 		color:white;
@@ -199,7 +202,8 @@
 		border: 0;
 	}
 	ul {
-		padding-left: 0px;
+		margin-top: 0;
+		padding-left: 0;
 	}
 	li{
 		list-style-position: inside;
@@ -257,7 +261,7 @@
 			padding: 0px;
 		}
 		.navbar {
-			/*background-color: #7289DA !important;*/
+				
 			overflow: hidden;
 			transition: max-height 0.3s;
 			box-sizing: border-box;

@@ -1,10 +1,10 @@
 'use strict';
-const gulp = require('gulp');
-const concat = require('gulp-concat');
-const less = require('gulp-less');
-const uglify = require('gulp-uglify-es').default;
-const cleanCSS = require('gulp-clean-css');
-const del = require('del');
+const gulp = require('gulp')
+	, concat = require('gulp-concat')
+	, less = require('gulp-less')
+	, uglify = require('gulp-uglify-es').default
+	, cleanCSS = require('gulp-clean-css')
+	, del = require('del');
 
 const paths = {
   styles: {

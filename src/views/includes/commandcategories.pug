@@ -6,14 +6,15 @@ each category in commands
 		each command in category.commands
 			div(class='width-wrapper')
 				div(class='section section-tile')
-					code(style='color: #ff3860;font-weight: bolder;font-size: 12pt;') #{command.name} #{command.args}
+					code(class='code-title') #{command.name} #{command.args}
 					br
 					p #{command.description}
-					ul Examples:
+					br
+					p Examples:
+					ul
 						each example in command.examples
-							li
-								code(style='color: #ff3860;') #{example}
+							li.code #{example}
 					if command.aliases
 						p Aliases:
-						code(style='color: #ff3860;') #{command.aliases.join(', ')}
+						code #{command.aliases.join(', ')}
 					
