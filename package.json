@@ -21,7 +21,7 @@
     "express": "^4.17.1",
     "express-session": "^1.16.1",
     "helmet": "^3.18.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "lodash.merge": "^4.6.2",
     "mongodb": "^3.2.7",
     "morgan": "^1.9.1",
